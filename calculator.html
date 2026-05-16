@@ -7,6 +7,22 @@
     background-color: #1a1a1a;
     font-family: Arial;
 }
+        button {
+    background-color: #505050;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    margin: 5px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent; /* Mobile lag fix */
+}
+
+button:active {
+    background-color: #909090; /* Dabaane pe instant feedback */
+}
 
 .calculator {
     background-color: black;
@@ -82,26 +98,34 @@ button:hover {
     </div>
 
     <script>
-        let display = document.getElementById("display");
+        let display = document.getElementById('display');
+let currentInput = '';
 
-        function appendToDisplay(value) {
-            display.value += value;
-        }
+function appendNumber(num) {
+    currentInput += num;
+    display.value = currentInput;
+}
 
-        function clearDisplay() {
-            display.value = "";
-        }
+function appendOperator(op) {
+    currentInput += op;
+    display.value = currentInput;
+}
 
-        function deleteLast() {
-            display.value = display.value.slice(0, -1);
-        }
+function calculate() {
+    try {
+        // eval hata diya, ye fast version hai
+        currentInput = Function('"use strict";return (' + currentInput + ')')();
+        display.value = currentInput;
+    } catch {
+        display.value = 'Error';
+        currentInput = '';
+    }
+}
 
-        function calculate() {
-            try {
-                display.value = eval(display.value);
-            } catch (error) {
-                display.value = "Error";
-            }
+function clearDisplay() {
+    currentInput = '';
+    display.value = '';
+}
         }
     </script>
 </body>
