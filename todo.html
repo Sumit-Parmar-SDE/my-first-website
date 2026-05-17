@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo App - Sumit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #1a1a1a;
+            font-family: Arial, sans-serif;
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+       .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #FF9500;
+        }
+       .back {
+            display: inline-block;
+            color: #FF9500;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+       .input-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #333;
+            background: #000;
+            color: white;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 15px 25px;
+            background: #FF9500;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+       .todo-item {
+            background: #000;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #333;
+        }
+       .todo-item.done {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+       .delete {
+            background: #FF3B30;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← Back to Home</a>
+        <h1>📝 My Todo List</h1>
+
+        <div class="input-box">
+            <input type="text" id="taskInput" placeholder="Naya task likho...">
+            <button onclick="addTask()">Add</button>
+        </div>
+
+        <div id="todoList"></div>
+    </div>
+
+    <script>
+        let todos = JSON.parse(localStorage.getItem('todos')) || [];
+
+        function renderTodos() {
+            const list = document.getElementById('todoList');
+            list.innerHTML = '';
+
+            todos.forEach((todo, index) => {
+                list.innerHTML += `
+                    <div class="todo-item ${todo.done? 'done' : ''}">
+                        <span onclick="toggleDone(${index})">${todo.text}</span>
+                        <button class="delete" onclick="deleteTask(${index})">Delete</button>
+                    </div>
+                `;
+            });
+        }
+
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            if (input.value.trim() === '') return;
+
+            todos.push({ text: input.value, done: false });
+            localStorage.setItem('todos', JSON.stringify(todos));
+            input.value = '';
+            renderTodos();
+        }
+
+        function toggleDone(index) {
+            todos[index].done =!todos[index].done;
+            localStorage.setItem('todos', JSON.stringify(todos));
+            renderTodos();
+        }
+
+        function deleteTask(index) {
+            todos.splice(index, 1);
+            localStorage.setItem('todos', JSON.stringify(todos));
+            renderTodos();
+        }
+
+        // Enter key se bhi add ho jaye
+        document.getElementById('taskInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') addTask();
+        });
+
+        renderTodos();
+    </script>
+</body>
+</html>
