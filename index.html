@@ -1,71 +1,85 @@
+<!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body {
-background: linear-gradient(to bottom, #00c6ff, #0072ff);
-font-family: Arial;
-text-align: center;
-}
-h1 {
-color: white;
-text-shadow: 2px 2px 4px black;
-}
-img {
-box-shadow:0px 0px 20px yellow;
-}
-button, input[type="submit"] {
-border-radius: 10px;
-cursor: pointer;
-}
-button:hover, input[type=submit"]:hover {
-background-color:orange;
-transform: scale(1.1);
-}
-</style>
+    <title>Sumit Parmar - SDE Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            font-family: Arial, sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #FF9500, #FF2D55);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p {
+            color: #aaa;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+        .projects {
+            display: grid;
+            gap: 20px;
+        }
+        .card {
+            background: #000;
+            border: 2px solid #333;
+            border-radius: 20px;
+            padding: 30px;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+        .card:hover {
+            border-color: #FF9500;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 149, 0, 0.3);
+        }
+        .card h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .card span {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .emoji { font-size: 50px; }
+    </style>
 </head>
 <body>
-bhai me coder ban gya
-amity bca + google job + html = highest package
-<h1>SUMIT PARMAR - future SDE</h1>
-<p>aaj mene apni pheli website bnaye.</p>
-<h3>next goal:CSS sikhna</h3>
-<hr>
-<img src="sumit.jpg" width="200" style="border: 5px solid yellow; border-radius: 50%;">
-<br><br>
-<a href="https://youtube.com" style="color:darkred;">mera youtube</a>
-<br><br>
-<button onclick="alert('bhai tu amir ban gya!') "style="padding:10px; background-color:yellow; font-size:16px;">click kar</button>
-<br><br>
-<hr>
-<h2>Google Search Karo:</h2>
-<form action ="https://www.google.com/search">
-<input type="text" name="q" placeholder=" search..."style="padding:10px; width:250;">
-<br><br>
-<input type="submit" value="Google Search" style="padding:10px; background-color:white; font-size:16px;">
-</form>
-<hr>
-<h2>meri skills:</h2>
-<ul>
-<li>HTML</li>
-<li>MS Word</li>
-<li>Video Editing</li>
-<li>Hardworking</li>
-</ul>
-<p style="color:black;">contact: sumit@gmail.com</p>
-<p style="color:black;"BCA student @ amity | future @ google</p>
-<hr>
-<h2>My Projects</h2>
-<p><a href="Todo.html">To-Do list app - click to try</a></p>
-  <a href="calculator.html" class="project-link">
-    <h3>🧮 Calculator</h3>
-    <p>My JavaScript calculator with all functions</p>
-  </a>
-<p>snake game - coming soon</p>
-<hr>
-<h2>my skills updated</p>
-<p>HTML | CSS | Github</p>
-<p>javascript - learning</p>
-<p>goal: Google SDE 2028</P>
+    <div class="container">
+        <div class="emoji">👨‍💻</div>
+        <h1>Sumit Parmar</h1>
+        <p>Future SDE | Building Projects Daily</p>
+        
+        <div class="projects">
+            <a href="todo.html" class="card">
+                <span>📝</span>
+                <h2>Todo App</h2>
+                <p>Task manager with local storage</p>
+            </a>
+            
+            <a href="calculator.html" class="card">
+                <span>🧮</span>
+                <h2>iPhone Calculator</h2>
+                <p>Fully functional calculator</p>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
