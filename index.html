@@ -1,95 +1,434 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Sumit Parmar - SDE Portfolio</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumit SDE - All In One</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f0f1a;
             color: white;
             min-height: 100vh;
+        }
+     .navbar {
+            background: #1a1a2e;
+            padding: 15px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 20px;
+            gap: 10px;
+            box-shadow: 0 2px 20px rgba(0,255,136,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .container {
-            text-align: center;
-            max-width: 500px;
-        }
-        h1 {
-            font-size: 40px;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #FF9500, #FF2D55);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        p {
-            color: #aaa;
-            margin-bottom: 40px;
-            font-size: 18px;
-        }
-        .projects {
-            display: grid;
-            gap: 20px;
-        }
-        .card {
-            background: #000;
-            border: 2px solid #333;
-            border-radius: 20px;
-            padding: 30px;
-            text-decoration: none;
-            color: white;
+     .nav-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background: #16213e;
+            color: #00ff88;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
             transition: 0.3s;
         }
-        .card:hover {
-            border-color: #FF9500;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 149, 0, 0.3);
+     .nav-btn.active {
+            background: #00ff88;
+            color: #000;
+            box-shadow: 0 0 20px #00ff88;
         }
-        .card h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
+     .nav-btn:hover { transform: scale(1.05); }
+     .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
         }
-        .card span {
+     .app { display: none; }
+     .app.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* TODO STYLES */
+     .todo-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+     .todo-input input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #00ff88;
+            border-radius: 8px;
+            background: #1a1a2e;
+            color: white;
+            font-size: 16px;
+        }
+     .todo-input button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            background: #00ff88;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+     .todo-list { list-style: none; }
+     .todo-item {
+            background: #1a1a2e;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #00ff88;
+        }
+     .todo-item.done { opacity: 0.5; text-decoration: line-through; }
+     .todo-item button {
+            background: #ff0080;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* CALCULATOR STYLES */
+     .calc {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0,255,136,0.2);
+        }
+     .calc-display {
+            background: #0f0f1a;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: right;
             font-size: 40px;
-            display: block;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            min-height: 80px;
+            word-wrap: break-word;
+            color: #00ff88;
         }
-        .emoji { font-size: 50px; }
+     .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+     .calc-buttons button {
+            padding: 25px;
+            font-size: 22px;
+            border: none;
+            border-radius: 10px;
+            background: #16213e;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+     .calc-buttons button:active { background: #00ff88; color: #000; }
+     .calc-buttons.operator { background: #ff0080; }
+     .calc-buttons.equals { background: #00ff88; color: #000; grid-column: span 2; }
+
+        /* SNAKE STYLES */
+     .snake-container { text-align: center; }
+     .snake-hud {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #snakeCanvas {
+            border: 3px solid #00ff88;
+            background: #0a0a0a;
+            box-shadow: 0 0 30px #00ff88;
+        }
+     .snake-controls { margin-top: 20px; }
+     .snake-btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+            background: #00ff88;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+        }
+     .dpad {
+            display: inline-grid;
+            grid-template-columns: repeat(3, 70px);
+            gap: 10px;
+            margin-top: 15px;
+        }
+     .dpad button {
+            padding: 20px;
+            font-size: 24px;
+            border: none;
+            border-radius: 12px;
+            background: #00ccff;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+     .dpad button:active { background: #00ff88; transform: scale(0.95); }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="emoji">👨‍💻</div>
-        <h1>Sumit Parmar</h1>
-        <p>Future SDE | Building Projects Daily</p>
-        
-        <div class="projects">
-            <a href="todo.html" class="card">
-                <span>📝</span>
-                <h2>Todo App</h2>
-                <p>Task manager with local storage</p>
-            </a>
-            
-            <a href="calculator.html" class="card">
-                <span>🧮</span>
-                <h2>iPhone Calculator</h2>
-                               <p>Fully functional calculator</p>
-            </a>
+    <div class="navbar">
+        <button class="nav-btn active" onclick="showApp('todo')">📝 TODO</button>
+        <button class="nav-btn" onclick="showApp('calc')">🧮 CALCULATOR</button>
+        <button class="nav-btn" onclick="showApp('snake')">🐍 SNAKE</button>
+    </div>
 
-            <a href="snake.html" class="card">
-                <span>🐍</span>
-                <h2>Snake Game</h2>
-                <p>Classic Nokia wala game</p>
-            </a>
+    <div class="container">
+        <!-- TODO APP -->
+        <div id="todo" class="app active">
+            <h2 style="margin-bottom: 20px; color: #00ff88;">📝 My Tasks</h2>
+            <div class="todo-input">
+                <input type="text" id="todoInput" placeholder="Naya task likho..." onkeypress="if(event.key==='Enter') addTodo()">
+                <button onclick="addTodo()">ADD</button>
+            </div>
+            <ul class="todo-list" id="todoList"></ul>
+        </div>
+
+        <!-- CALCULATOR APP -->
+        <div id="calc" class="app">
+            <h2 style="margin-bottom: 20px; color: #00ff88;">🧮 Calculator</h2>
+            <div class="calc">
+                <div class="calc-display" id="calcDisplay">0</div>
+                <div class="calc-buttons">
+                    <button onclick="clearCalc()" class="operator">C</button>
+                    <button onclick="appendCalc('/')" class="operator">/</button>
+                    <button onclick="appendCalc('*')" class="operator">×</button>
+                    <button onclick="deleteCalc()" class="operator">⌫</button>
+                    <button onclick="appendCalc('7')">7</button>
+                    <button onclick="appendCalc('8')">8</button>
+                    <button onclick="appendCalc('9')">9</button>
+                    <button onclick="appendCalc('-')" class="operator">-</button>
+                    <button onclick="appendCalc('4')">4</button>
+                    <button onclick="appendCalc('5')">5</button>
+                    <button onclick="appendCalc('6')">6</button>
+                    <button onclick="appendCalc('+')" class="operator">+</button>
+                    <button onclick="appendCalc('1')">1</button>
+                    <button onclick="appendCalc('2')">2</button>
+                    <button onclick="appendCalc('3')">3</button>
+                    <button onclick="appendCalc('.')">.</button>
+                    <button onclick="appendCalc('0')" style="grid-column: span 2;">0</button>
+                    <button onclick="calculate()" class="equals">=</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SNAKE APP -->
+        <div id="snake" class="app">
+            <h2 style="margin-bottom: 20px; color: #00ff88;">🐍 Snake Game</h2>
+            <div class="snake-container">
+                <div class="snake-hud">
+                    <div>Score: <span id="snakeScore">0</span></div>
+                    <div>Best: <span id="snakeBest">0</span></div>
+                </div>
+                <canvas id="snakeCanvas" width="300" height="300"></canvas>
+                <div class="snake-controls">
+                    <button class="snake-btn" id="snakeStart" onclick="startSnake()">START GAME</button>
+                    <br>
+                    <div class="dpad">
+                        <div></div>
+                        <button onclick="changeDir(0,-1)">↑</button>
+                        <div></div>
+                        <button onclick="changeDir(-1,0)">←</button>
+                        <button onclick="changeDir(0,1)">↓</button>
+                        <button onclick="changeDir(1,0)">→</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</body>
-</html>
-        </div>
-    </div>
+
+    <script>
+        // NAVIGATION
+        function showApp(appName) {
+            document.querySelectorAll('.app').forEach(app => app.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(appName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // TODO APP LOGIC
+        let todos = JSON.parse(localStorage.getItem('todos')) || [];
+
+        function renderTodos() {
+            const list = document.getElementById('todoList');
+            list.innerHTML = '';
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.className = 'todo-item' + (todo.done? ' done' : '');
+                li.innerHTML = `
+                    <span onclick="toggleTodo(${index})" style="cursor:pointer; flex:1;">${todo.text}</span>
+                    <button onclick="deleteTodo(${index})">Delete</button>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            if (input.value.trim()) {
+                todos.push({ text: input.value, done: false });
+                localStorage.setItem('todos', JSON.stringify(todos));
+                input.value = '';
+                renderTodos();
+            }
+        }
+
+        function toggleTodo(index) {
+            todos[index].done =!todos[index].done;
+            localStorage.setItem('todos', JSON.stringify(todos));
+            renderTodos();
+        }
+
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            localStorage.setItem('todos', JSON.stringify(todos));
+            renderTodos();
+        }
+
+        renderTodos();
+
+        // CALCULATOR LOGIC
+        let calcValue = '0';
+        const display = document.getElementById('calcDisplay');
+
+        function updateDisplay() {
+            display.textContent = calcValue;
+        }
+
+        function appendCalc(val) {
+            if (calcValue === '0' && val!== '.') calcValue = val;
+            else calcValue += val;
+            updateDisplay();
+        }
+
+        function clearCalc() {
+            calcValue = '0';
+            updateDisplay();
+        }
+
+        function deleteCalc() {
+            calcValue = calcValue.slice(0, -1) || '0';
+            updateDisplay();
+        }
+
+        function calculate() {
+            try {
+                calcValue = String(eval(calcValue.replace('×', '*')));
+            } catch {
+                calcValue = 'Error';
+            }
+            updateDisplay();
+        }
+
+        // SNAKE LOGIC - SIMPLE & WORKING
+        const snakeCanvas = document.getElementById('snakeCanvas');
+        const snakeCtx = snakeCanvas.getContext('2d');
+        let snake, food, dx, dy, snakeScore, snakeGame, snakeRunning;
+        let snakeBest = localStorage.getItem('snakeBest') || 0;
+        document.getElementById('snakeBest').textContent = snakeBest;
+
+        function initSnake() {
+            snake = [{x: 10, y: 10}];
+            dx = 1; dy = 0;
+            snakeScore = 0;
+            document.getElementById('snakeScore').textContent = 0;
+            spawnSnakeFood();
+            drawSnake();
+        }
+
+        function spawnSnakeFood() {
+            food = {
+                x: Math.floor(Math.random() * 20),
+                y: Math.floor(Math.random() * 20)
+            };
+        }
+
+        function drawSnake() {
+            snakeCtx.fillStyle = '#0a0a0a';
+            snakeCtx.fillRect(0, 0, 300, 300);
+
+            snakeCtx.fillStyle = 'red';
+            snakeCtx.fillRect(food.x * 15, food.y * 15, 15, 15);
+
+            snakeCtx.fillStyle = '#00ff88';
+            snake.forEach(s => {
+                snakeCtx.fillRect(s.x * 15, s.y * 15, 15, 15);
+            });
+        }
+
+        function moveSnake() {
+            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+
+            if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20) {
+                gameOverSnake();
+                return;
+            }
+
+            if (snake.some(s => s.x === head.x && s.y === head.y)) {
+                gameOverSnake();
+                return;
+            }
+
+            snake.unshift(head);
+
+            if (head.x === food.x && head.y === food.y) {
+                snakeScore += 10;
+                document.getElementById('snakeScore').textContent = snakeScore;
+                spawnSnakeFood();
+            } else {
+                snake.pop();
+            }
+
+            drawSnake();
+        }
+
+        function startSnake() {
+            if (snakeRunning) return;
+            initSnake();
+            snakeRunning = true;
+            document.getElementById('snakeStart').textContent = 'PLAYING...';
+            snakeGame = setInterval(moveSnake, 150);
+        }
+
+        function gameOverSnake() {
+            clearInterval(snakeGame);
+            snakeRunning = false;
+            document.getElementById('snakeStart').textContent = 'RESTART';
+            if (snakeScore > snakeBest) {
+                snakeBest = snakeScore;
+                localStorage.setItem('snakeBest', snakeBest);
+                document.getElementById('snakeBest').textContent = snakeBest;
+            }
+            alert('Game Over! Score: ' + snakeScore);
+        }
+
+        function changeDir(newDx, newDy) {
+            if (!snakeRunning) return;
+            if (dx === -newDx && dy === -newDy) return;
+            dx = newDx; dy = newDy;
+        }
+
+        // Keyboard for snake
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('snake').classList.contains('active')) {
+                if (e.key === 'ArrowUp') changeDir(0, -1);
+                if (e.key === 'ArrowDown') changeDir(0, 1);
+                if (e.key === 'ArrowLeft') changeDir(-1, 0);
+                if (e.key === 'ArrowRight') changeDir(1, 0);
+            }
+        });
+
+        initSnake();
+    </script>
 </body>
 </html>
