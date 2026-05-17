@@ -1,117 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sumit ka Calculator</title>
-    <style>
-        * { touch-action: manipulation; }
-        body {
-            background-color: #1a1a1a;
-            display: flex;
-            justify-content: center;
-            margin-top: 50px;
-            font-family: Arial;
-        }
-        .calculator {
-            background-color: black;
-            padding: 20px;
-            border-radius: 20px;
-            width: 300px;
-        }
-        #display {
-            background-color: #333;
-            color: white;
-            font-size: 40px;
-            padding: 20px;
-            text-align: right;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            width: 100%;
-            box-sizing: border-box;
-            border: none;
-        }
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-        button {
-            background-color: #505050;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            height: 60px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        button:active { background-color: #909090; }
-        .operator { background-color: #FF9500; }
-        .equals { background-color: #FF9500; }
-        .clear { background-color: #D4D4D2; color: black; }
-    </style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<style>
+body{background:#1a1a1a;display:flex;justify-content:center;margin-top:50px;font-family:Arial}
+.calculator{background:black;padding:20px;border-radius:20px;width:300px}
+#display{background:#333;color:white;font-size:40px;padding:20px;text-align:right;border-radius:10px;margin-bottom:10px;width:100%;box-sizing:border-box;border:none}
+.buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+button{background:#505050;color:white;border:none;border-radius:50%;height:60px;font-size:24px}
+button:active{background:#909090}
+.operator,.equals{background:#FF9500}
+.clear{background:#D4D4D2;color:black}
+</style>
 </head>
 <body>
-    <div class="calculator">
-        <input type="text" id="display" readonly>
-        <div class="buttons">
-            <button class="clear" onclick="clearDisplay()">C</button>
-            <button class="operator" onclick="appendOperator('/')">/</button>
-            <button class="operator" onclick="appendOperator('*')">x</button>
-            <button class="operator" onclick="deleteLast()">⌫</button>
-            
-            <button onclick="appendNumber('7')">7</button>
-            <button onclick="appendNumber('8')">8</button>
-            <button onclick="appendNumber('9')">9</button>
-            <button class="operator" onclick="appendOperator('-')">-</button>
-            
-            <button onclick="appendNumber('4')">4</button>
-            <button onclick="appendNumber('5')">5</button>
-            <button onclick="appendNumber('6')">6</button>
-            <button class="operator" onclick="appendOperator('+')">+</button>
-            
-            <button onclick="appendNumber('1')">1</button>
-            <button onclick="appendNumber('2')">2</button>
-            <button onclick="appendNumber('3')">3</button>
-            <button class="equals" onclick="calculate()">=</button>
-            
-            <button onclick="appendNumber('0')" style="grid-column: span 2; border-radius: 30px;">0</button>
-            <button onclick="appendNumber('.')">.</button>
-        </div>
-    </div>
-
-    <script>
-        let display = document.getElementById('display');
-        let currentInput = '';
-
-        function appendNumber(num) {
-            currentInput += num;
-            display.value = currentInput;
-        }
-
-        function appendOperator(op) {
-            if (currentInput === '') return;
-            currentInput += op;
-            display.value = currentInput;
-        }
-
-        function calculate() {
-            try {
-                currentInput = Function('"use strict";return (' + currentInput + ')')();
-                display.value = currentInput;
-            } catch {
-                display.value = 'Error';
-                currentInput = '';
-            }
-        }
-
-        function clearDisplay() {
-            currentInput = '';
-            display.value = '';
-        }
-        
-        function deleteLast() {
-            currentInput = currentInput.slice(0, -1);
-            display.value = currentInput;
-        }
-    </script>
+<div class="calculator">
+<input type="text" id="display" readonly>
+<div class="buttons">
+<button class="clear" onclick="clearDisplay()">C</button>
+<button class="operator" onclick="appendOperator('/')">/</button>
+<button class="operator" onclick="appendOperator('*')">x</button>
+<button class="operator" onclick="deleteLast()">⌫</button>
+<button onclick="appendNumber('7')">7</button>
+<button onclick="appendNumber('8')">8</button>
+<button onclick="appendNumber('9')">9</button>
+<button class="operator" onclick="appendOperator('-')">-</button>
+<button onclick="appendNumber('4')">4</button>
+<button onclick="appendNumber('5')">5</button>
+<button onclick="appendNumber('6')">6</button>
+<button class="operator" onclick="appendOperator('+')">+</button>
+<button onclick="appendNumber('1')">1</button>
+<button onclick="appendNumber('2')">2</button>
+<button onclick="appendNumber('3')">3</button>
+<button class="equals" onclick="calculate()">=</button>
+<button onclick="appendNumber('0')" style="grid-column:span 2;border-radius:30px">0</button>
+<button onclick="appendNumber('.')">.</button>
+</div>
+</div>
+<script>
+let display=document.getElementById('display');
+let currentInput='';
+function appendNumber(num){currentInput+=num;display.value=currentInput;}
+function appendOperator(op){if(currentInput==='')return;currentInput+=op;display.value=currentInput;}
+function calculate(){try{currentInput=Function('return ('+currentInput+')')();display.value=currentInput;}catch{display.value='Error';currentInput='';}}
+function clearDisplay(){currentInput='';display.value='';}
+function deleteLast(){currentInput=currentInput.slice(0,-1);display.value=currentInput;}
+</script>
 </body>
 </html>
