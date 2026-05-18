@@ -1,537 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sumit SDE - All In One</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #0f0f1a;
-            color: white;
-            min-height: 100vh;
-            transition: 0.3s;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sumit SDE - Developer Portfolio</title>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(-45deg, #0f0f1a, #1a1a2e, #16213e, #0f3460);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      color: #fff;
+      min-height: 100vh;
+    }
+    
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-        /* WELCOME SCREEN */
-        #welcomeScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0f0f1a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            animation: fadeOut 0.5s ease-in-out 2s forwards;
-        }
-        #welcomeScreen h1 {
-            font-size: 60px;
-            font-weight: 900;
-            color: #00ff88;
-            text-shadow: 0 0 40px #00ff88;
-            animation: zoomIn 1s ease-out;
-            text-align: center;
-        }
-        @keyframes zoomIn {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
-        }
-        #mainContent {
-            opacity: 0;
-            animation: showContent 0.5s ease-in 2s forwards;
-        }
-        @keyframes showContent {
-            to { opacity: 1; }
-        }
+    /* Navbar */
+    nav {
+      display: flex; justify-content: space-between; 
+      align-items: center; padding: 1.2rem 8%;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .logo { font-size: 1.6rem; font-weight: 700; color: #00e5ff; }
+    nav a { 
+      color: #ddd; text-decoration: none; margin-left: 2rem; 
+      font-weight: 500; transition: 0.3s;
+    }
+    nav a:hover { color: #00e5ff; }
 
-   .navbar {
-            background: #1a1a2e;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 2px 20px rgba(0,255,136,0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-   .nav-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            background: #16213e;
-            color: #00ff88;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-   .nav-btn.active {
-            background: #00ff88;
-            color: #000;
-            box-shadow: 0 0 20px #00ff88;
-        }
-   .nav-btn:hover { transform: scale(1.05); }
-   .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-   .app { display: none; }
-   .app.active { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    /* Hero Section */
+    .hero {
+      text-align: center; padding: 7rem 2rem 5rem 2rem;
+    }
+    .hero h1 { font-size: 3.2rem; margin-bottom: 1rem; }
+    .hero h1 span { color: #00e5ff; }
+    .hero p { color: #bbb; font-size: 1.1rem; margin-bottom: 2.5rem; }
+    .btn {
+      background: #00e5ff; color: #0f0f1a; padding: 14px 28px;
+      border-radius: 8px; text-decoration: none; font-weight: bold;
+      transition: 0.3s; display: inline-block;
+    }
+    .btn:hover { 
+      transform: scale(1.05); 
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.6); 
+    }
 
-        /* TODO STYLES */
-   .todo-input {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-   .todo-input input {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid #00ff88;
-            border-radius: 8px;
-            background: #1a1a2e;
-            color: white;
-            font-size: 16px;
-        }
-   .todo-input button {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            background: #00ff88;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-        }
-   .todo-list { list-style: none; }
-   .todo-item {
-            background: #1a1a2e;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 4px solid #00ff88;
-        }
-   .todo-item.done { opacity: 0.5; text-decoration: line-through; }
-   .todo-item button {
-            background: #ff0080;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    /* Projects */
+    .projects { padding: 4rem 8% 6rem 8%; }
+    .projects h2 { 
+      text-align: center; font-size: 2.5rem; 
+      margin-bottom: 3.5rem; 
+    }
+    .grid {
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.05); padding: 2rem;
+      border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
+      transition: 0.3s;
+    }
+    .card:hover { 
+      transform: translateY(-8px); 
+      border-color: #00e5ff;
+      background: rgba(255,255,255,0.08);
+    }
+    .card h3 { margin-bottom: 0.8rem; font-size: 1.4rem; }
+    .card p { color: #aaa; margin-bottom: 1.5rem; line-height: 1.6; }
+    .card a { 
+      color: #00e5ff; text-decoration: none; 
+      font-weight: 600; 
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center; padding: 2rem;
+      color: #777; border-top: 1px solid rgba(255,255,255,0.1);
+    }
 
-        /* CALCULATOR STYLES */
-   .calc {
-            background: #1a1a2e;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0,255,136,0.2);
-        }
-   .calc-display {
-            background: #0f0f1a;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: right;
-            font-size: 40px;
-            margin-bottom: 20px;
-            min-height: 80px;
-            word-wrap: break-word;
-            color: #00ff88;
-        }
-   .calc-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-   .calc-buttons button {
-            padding: 25px;
-            font-size: 22px;
-            border: none;
-            border-radius: 10px;
-            background: #16213e;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
-   .calc-buttons button:active { background: #00ff88; color: #000; }
-   .calc-buttons.operator { background: #ff0080; }
-   .calc-buttons.equals { background: #00ff88; color: #000; grid-column: span 2; }
-
-        /* SNAKE STYLES */
-   .snake-container { text-align: center; }
-   .snake-hud {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 15px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        #snakeCanvas {
-            border: 3px solid #00ff88;
-            background: #0a0a0a;
-            box-shadow: 0 0 30px #00ff88;
-        }
-   .snake-controls { margin-top: 20px; }
-   .snake-btn {
-            padding: 15px 40px;
-            font-size: 18px;
-            border: none;
-            border-radius: 25px;
-            background: #00ff88;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 10px;
-        }
-   .dpad {
-            display: inline-grid;
-            grid-template-columns: repeat(3, 70px);
-            gap: 10px;
-            margin-top: 15px;
-        }
-   .dpad button {
-            padding: 20px;
-            font-size: 24px;
-            border: none;
-            border-radius: 12px;
-            background: #00ccff;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-        }
-   .dpad button:active { background: #00ff88; transform: scale(0.95); }
-
-     /* LIGHT MODE STYLES */
-     body.light-mode {
-         background: #f5f5f5;
-         color: #111;
-     }
-     body.light-mode #welcomeScreen {
-         background: #f5f5f5;
-     }
-     body.light-mode #welcomeScreen h1 {
-         color: #00ff88;
-         text-shadow: 0 0 40px rgba(0,255,136,0.5);
-     }
-     body.light-mode.navbar {
-         background: #fff;
-         box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-     }
-     body.light-mode.nav-btn {
-         background: #e0e0e0;
-         color: #000;
-     }
-     body.light-mode.nav-btn.active {
-         background: #00ff88;
-         color: #000;
-     }
-     body.light-mode.calc,
-     body.light-mode.todo-item,
-     body.light-mode.todo-input input {
-         background: #fff;
-         color: #000;
-         border-color: #00ff88;
-     }
-     body.light-mode.calc-display {
-         background: #e0e0e0;
-         color: #000;
-     }
-     body.light-mode #snakeCanvas {
-         border-color: #00ff88;
-         box-shadow: 0 0 30px rgba(0,0,0,0.2);
-     }
-    </style>
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 5%; }
+      nav a { margin-left: 1rem; }
+      .hero h1 { font-size: 2.2rem; }
+      .hero { padding: 5rem 1rem 3rem 1rem; }
+      .projects { padding: 3rem 5%; }
+    }
+  </style>
 </head>
 <body>
-    <!-- WELCOME SCREEN -->
-    <div id="welcomeScreen">
-        <h1>SUMIT PARMAR</h1>
+  <nav>
+    <div class="logo">Sumit.dev</div>
+    <div>
+      <a href="#home">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="https://github.com/Sumit-Parmar-SDE" target="_blank">GitHub</a>
     </div>
+  </nav>
 
-    <!-- MAIN CONTENT -->
-    <div id="mainContent">
-        <div class="navbar">
-            <button class="nav-btn active" onclick="showApp('todo')">📝 TODO</button>
-            <button class="nav-btn" onclick="showApp('calc')">🧮 CALCULATOR</button>
-            <button class="nav-btn" onclick="showApp('snake')">🐍 SNAKE</button>
-            <button class="nav-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
-        </div>
+  <section class="hero" id="home">
+    <h1>Hi, I'm <span>Sumit SDE</span></h1>
+    <p>Frontend Developer | I build interactive websites and web apps</p>
+    <a href="#projects" class="btn">View My Work</a>
+  </section>
 
-        <div class="container">
-            <!-- TODO APP -->
-            <div id="todo" class="app active">
-                <h2 style="margin-bottom: 20px; color: #00ff88;">📝 My Tasks</h2>
-                <div class="todo-input">
-                    <input type="text" id="todoInput" placeholder="Naya task likho..." onkeypress="if(event.key==='Enter') addTodo()">
-                    <button onclick="addTodo()">ADD</button>
-                </div>
-                <ul class="todo-list" id="todoList"></ul>
-            </div>
-
-            <!-- CALCULATOR APP -->
-            <div id="calc" class="app">
-                <h2 style="margin-bottom: 20px; color: #00ff88;">🧮 Calculator</h2>
-                <div class="calc">
-                    <div class="calc-display" id="calcDisplay">0</div>
-                    <div class="calc-buttons">
-                        <button onclick="clearCalc()" class="operator">C</button>
-                        <button onclick="appendCalc('/')" class="operator">/</button>
-                        <button onclick="appendCalc('*')" class="operator">×</button>
-                        <button onclick="deleteCalc()" class="operator">⌫</button>
-                        <button onclick="appendCalc('7')">7</button>
-                        <button onclick="appendCalc('8')">8</button>
-                        <button onclick="appendCalc('9')">9</button>
-                        <button onclick="appendCalc('-')" class="operator">-</button>
-                        <button onclick="appendCalc('4')">4</button>
-                        <button onclick="appendCalc('5')">5</button>
-                        <button onclick="appendCalc('6')">6</button>
-                        <button onclick="appendCalc('+')" class="operator">+</button>
-                        <button onclick="appendCalc('1')">1</button>
-                        <button onclick="appendCalc('2')">2</button>
-                        <button onclick="appendCalc('3')">3</button>
-                        <button onclick="appendCalc('.')">.</button>
-                        <button onclick="appendCalc('0')" style="grid-column: span 2;">0</button>
-                        <button onclick="calculate()" class="equals">=</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SNAKE APP -->
-            <div id="snake" class="app">
-                <h2 style="margin-bottom: 20px; color: #00ff88;">🐍 Snake Game</h2>
-                <div class="snake-container">
-                    <div class="snake-hud">
-                        <div>Score: <span id="snakeScore">0</span></div>
-                        <div>Best: <span id="snakeBest">0</span></div>
-                    </div>
-                    <canvas id="snakeCanvas" width="300" height="300"></canvas>
-                    <div class="snake-controls">
-                        <button class="snake-btn" id="snakeStart" onclick="startSnake()">START GAME</button>
-                        <br>
-                        <div class="dpad">
-                            <div></div>
-                            <button onclick="changeDir(0,-1)">↑</button>
-                            <div></div>
-                            <button onclick="changeDir(-1,0)">←</button>
-                            <button onclick="changeDir(0,1)">↓</button>
-                            <button onclick="changeDir(1,0)">→</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <section class="projects" id="projects">
+    <h2>My Projects</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Calculator</h3>
+        <p>A clean, functional calculator built with vanilla HTML, CSS and JavaScript.</p>
+        <a href="calculator.html">Live Demo →</a>
+      </div>
+      <div class="card">
+        <h3>Snake Game</h3>
+        <p>Play the classic Snake game right in your browser. Built using JS canvas.</p>
+        <a href="snake.html">Play Now →</a>
+      </div>
+      <div class="card">
+        <h3>Todo App</h3>
+        <p>Simple todo list to manage daily tasks. Uses localStorage to save data.</p>
+        <a href="todo.html">Try It →</a>
+      </div>
     </div>
-
-    <script>
-        // NAVIGATION
-        function showApp(appName) {
-            document.querySelectorAll('.app').forEach(app => app.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(appName).classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        // TODO APP LOGIC
-        let todos = JSON.parse(localStorage.getItem('todos')) || [];
-
-        function renderTodos() {
-            const list = document.getElementById('todoList');
-            list.innerHTML = '';
-            todos.forEach((todo, index) => {
-                const li = document.createElement('li');
-                li.className = 'todo-item' + (todo.done? ' done' : '');
-                li.innerHTML = `
-                    <span onclick="toggleTodo(${index})" style="cursor:pointer; flex:1;">${todo.text}</span>
-                    <button onclick="deleteTodo(${index})">Delete</button>
-                `;
-                list.appendChild(li);
-            });
-        }
-
-        function addTodo() {
-            const input = document.getElementById('todoInput');
-            if (input.value.trim()) {
-                todos.push({ text: input.value, done: false });
-                localStorage.setItem('todos', JSON.stringify(todos));
-                input.value = '';
-                renderTodos();
-            }
-        }
-
-        function toggleTodo(index) {
-            todos[index].done =!todos[index].done;
-            localStorage.setItem('todos', JSON.stringify(todos));
-            renderTodos();
-        }
-
-        function deleteTodo(index) {
-            todos.splice(index, 1);
-            localStorage.setItem('todos', JSON.stringify(todos));
-            renderTodos();
-        }
-
-        renderTodos();
-
-        // CALCULATOR LOGIC
-        let calcValue = '0';
-        const display = document.getElementById('calcDisplay');
-
-        function updateDisplay() {
-            display.textContent = calcValue;
-        }
-
-        function appendCalc(val) {
-            if (calcValue === '0' && val!== '.') calcValue = val;
-            else calcValue += val;
-            updateDisplay();
-        }
-
-        function clearCalc() {
-            calcValue = '0';
-            updateDisplay();
-        }
-
-        function deleteCalc() {
-            calcValue = calcValue.slice(0, -1) || '0';
-            updateDisplay();
-        }
-
-        function calculate() {
-            try {
-                calcValue = String(eval(calcValue.replace('×', '*')));
-            } catch {
-                calcValue = 'Error';
-            }
-            updateDisplay();
-        }
-
-        // SNAKE LOGIC
-        const snakeCanvas = document.getElementById('snakeCanvas');
-        const snakeCtx = snakeCanvas.getContext('2d');
-        let snake, food, dx, dy, snakeScore, snakeGame, snakeRunning;
-        let snakeBest = localStorage.getItem('snakeBest') || 0;
-        document.getElementById('snakeBest').textContent = snakeBest;
-
-        function initSnake() {
-            snake = [{x: 10, y: 10}];
-            dx = 1; dy = 0;
-            snakeScore = 0;
-            document.getElementById('snakeScore').textContent = 0;
-            spawnSnakeFood();
-            drawSnake();
-        }
-
-        function spawnSnakeFood() {
-            food = {
-                x: Math.floor(Math.random() * 20),
-                y: Math.floor(Math.random() * 20)
-            };
-        }
-
-        function drawSnake() {
-            snakeCtx.fillStyle = '#0a0a0a';
-            snakeCtx.fillRect(0, 0, 300, 300);
-
-            snakeCtx.fillStyle = 'red';
-            snakeCtx.fillRect(food.x * 15, food.y * 15, 15, 15);
-
-            snakeCtx.fillStyle = '#00ff88';
-            snake.forEach(s => {
-                snakeCtx.fillRect(s.x * 15, s.y * 15, 15, 15);
-            });
-        }
-
-        function moveSnake() {
-            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
-
-            if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20) {
-                gameOverSnake();
-                return;
-            }
-
-            if (snake.some(s => s.x === head.x && s.y === head.y)) {
-                gameOverSnake();
-                return;
-            }
-
-            snake.unshift(head);
-
-            if (head.x === food.x && head.y === food.y) {
-                snakeScore += 10;
-                document.getElementById('snakeScore').textContent = snakeScore;
-                spawnSnakeFood();
-            } else {
-                snake.pop();
-            }
-
-            drawSnake();
-        }
-
-        function startSnake() {
-            if (snakeRunning) return;
-            initSnake();
-            snakeRunning = true;
-            document.getElementById('snakeStart').textContent = 'PLAYING...';
-            snakeGame = setInterval(moveSnake, 150);
-        }
-
-        function gameOverSnake() {
-            clearInterval(snakeGame);
-            snakeRunning = false;
-            document.getElementById('snakeStart').textContent = 'RESTART';
-            if (snakeScore > snakeBest) {
-                snakeBest = snakeScore;
-                localStorage.setItem('snakeBest', snakeBest);
-                document.getElementById('snakeBest').textContent = snakeBest;
-            }
-            alert('Game Over! Score: ' + snakeScore);
-        }
-
-        function changeDir(newDx, newDy) {
-            if (!snakeRunning) return;
-            if (dx === -newDx && dy === -newDy) return;
-            dx = newDx; dy = newDy;
-        }
-
-        // Keyboard for snake
-        document.addEventListener('keydown', (e) => {
-            if (document.getElementById('snake').classList.contains('active')) {
-                if (e.key === 'ArrowUp') changeDir(0, -1);
-                if (e.key === 'ArrowDown') changeDir(0, 1);
-                if (e.key === 'ArrowLeft') changeDir(-1, 0);
-                if (e.key === 'ArrowRight') changeDir(1, 0);
-            }
-        });
-
-        initSnake();
-
-        // THEME TOGGLE FUNCTION
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            const btn = document.getElementById('themeBtn');
-            const isLight = document.body.classList.contains('light-mode');
-            btn.textContent = isLight? '☀️' : '🌙';
-            localStorage.setItem('theme', isLight? 'light' : 'dark');
-        }
-
-        // PAGE LOAD PE THEME CHECK KAR
-        if(localStorage.getItem('theme') === 'light') {
-            document.body.classList.add('light-mode');
-            document.getElementById('themeBtn').textContent = '☀️';
-        }
-    </script>
+  </section>
+  
+  <footer>
+    <p>© 2026 Sumit Parmar. Built with HTML & CSS.</p>
+  </footer>
 </body>
 </html>
