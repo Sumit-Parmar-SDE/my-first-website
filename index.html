@@ -11,8 +11,47 @@
             background: #0f0f1a;
             color: white;
             min-height: 100vh;
+            transition: 0.3s;
         }
-     .navbar {
+
+        /* WELCOME SCREEN */
+        #welcomeScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f0f1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 0.5s ease-in-out 2s forwards;
+        }
+        #welcomeScreen h1 {
+            font-size: 60px;
+            font-weight: 900;
+            color: #00ff88;
+            text-shadow: 0 0 40px #00ff88;
+            animation: zoomIn 1s ease-out;
+            text-align: center;
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+        #mainContent {
+            opacity: 0;
+            animation: showContent 0.5s ease-in 2s forwards;
+        }
+        @keyframes showContent {
+            to { opacity: 1; }
+        }
+
+   .navbar {
             background: #1a1a2e;
             padding: 15px;
             display: flex;
@@ -23,7 +62,7 @@
             top: 0;
             z-index: 100;
         }
-     .nav-btn {
+   .nav-btn {
             padding: 12px 24px;
             border: none;
             border-radius: 8px;
@@ -34,28 +73,28 @@
             font-size: 16px;
             transition: 0.3s;
         }
-     .nav-btn.active {
+   .nav-btn.active {
             background: #00ff88;
             color: #000;
             box-shadow: 0 0 20px #00ff88;
         }
-     .nav-btn:hover { transform: scale(1.05); }
-     .container {
+   .nav-btn:hover { transform: scale(1.05); }
+   .container {
             max-width: 600px;
             margin: 20px auto;
             padding: 20px;
         }
-     .app { display: none; }
-     .app.active { display: block; animation: fadeIn 0.3s; }
+   .app { display: none; }
+   .app.active { display: block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* TODO STYLES */
-     .todo-input {
+   .todo-input {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
         }
-     .todo-input input {
+   .todo-input input {
             flex: 1;
             padding: 15px;
             border: 2px solid #00ff88;
@@ -64,7 +103,7 @@
             color: white;
             font-size: 16px;
         }
-     .todo-input button {
+   .todo-input button {
             padding: 15px 30px;
             border: none;
             border-radius: 8px;
@@ -73,8 +112,8 @@
             font-weight: bold;
             cursor: pointer;
         }
-     .todo-list { list-style: none; }
-     .todo-item {
+   .todo-list { list-style: none; }
+   .todo-item {
             background: #1a1a2e;
             padding: 15px;
             margin: 10px 0;
@@ -84,8 +123,8 @@
             align-items: center;
             border-left: 4px solid #00ff88;
         }
-     .todo-item.done { opacity: 0.5; text-decoration: line-through; }
-     .todo-item button {
+   .todo-item.done { opacity: 0.5; text-decoration: line-through; }
+   .todo-item button {
             background: #ff0080;
             color: white;
             border: none;
@@ -95,13 +134,13 @@
         }
 
         /* CALCULATOR STYLES */
-     .calc {
+   .calc {
             background: #1a1a2e;
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 0 30px rgba(0,255,136,0.2);
         }
-     .calc-display {
+   .calc-display {
             background: #0f0f1a;
             padding: 20px;
             border-radius: 10px;
@@ -112,12 +151,12 @@
             word-wrap: break-word;
             color: #00ff88;
         }
-     .calc-buttons {
+   .calc-buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
         }
-     .calc-buttons button {
+   .calc-buttons button {
             padding: 25px;
             font-size: 22px;
             border: none;
@@ -127,13 +166,13 @@
             cursor: pointer;
             font-weight: bold;
         }
-     .calc-buttons button:active { background: #00ff88; color: #000; }
-     .calc-buttons.operator { background: #ff0080; }
-     .calc-buttons.equals { background: #00ff88; color: #000; grid-column: span 2; }
+   .calc-buttons button:active { background: #00ff88; color: #000; }
+   .calc-buttons.operator { background: #ff0080; }
+   .calc-buttons.equals { background: #00ff88; color: #000; grid-column: span 2; }
 
         /* SNAKE STYLES */
-     .snake-container { text-align: center; }
-     .snake-hud {
+   .snake-container { text-align: center; }
+   .snake-hud {
             display: flex;
             justify-content: space-around;
             margin-bottom: 15px;
@@ -145,8 +184,8 @@
             background: #0a0a0a;
             box-shadow: 0 0 30px #00ff88;
         }
-     .snake-controls { margin-top: 20px; }
-     .snake-btn {
+   .snake-controls { margin-top: 20px; }
+   .snake-btn {
             padding: 15px 40px;
             font-size: 18px;
             border: none;
@@ -157,13 +196,13 @@
             cursor: pointer;
             margin: 10px;
         }
-     .dpad {
+   .dpad {
             display: inline-grid;
             grid-template-columns: repeat(3, 70px);
             gap: 10px;
             margin-top: 15px;
         }
-     .dpad button {
+   .dpad button {
             padding: 20px;
             font-size: 24px;
             border: none;
@@ -173,74 +212,123 @@
             font-weight: bold;
             cursor: pointer;
         }
-     .dpad button:active { background: #00ff88; transform: scale(0.95); }
+   .dpad button:active { background: #00ff88; transform: scale(0.95); }
+
+     /* LIGHT MODE STYLES */
+     body.light-mode {
+         background: #f5f5f5;
+         color: #111;
+     }
+     body.light-mode #welcomeScreen {
+         background: #f5f5f5;
+     }
+     body.light-mode #welcomeScreen h1 {
+         color: #00ff88;
+         text-shadow: 0 0 40px rgba(0,255,136,0.5);
+     }
+     body.light-mode.navbar {
+         background: #fff;
+         box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+     }
+     body.light-mode.nav-btn {
+         background: #e0e0e0;
+         color: #000;
+     }
+     body.light-mode.nav-btn.active {
+         background: #00ff88;
+         color: #000;
+     }
+     body.light-mode.calc,
+     body.light-mode.todo-item,
+     body.light-mode.todo-input input {
+         background: #fff;
+         color: #000;
+         border-color: #00ff88;
+     }
+     body.light-mode.calc-display {
+         background: #e0e0e0;
+         color: #000;
+     }
+     body.light-mode #snakeCanvas {
+         border-color: #00ff88;
+         box-shadow: 0 0 30px rgba(0,0,0,0.2);
+     }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <button class="nav-btn active" onclick="showApp('todo')">📝 TODO</button>
-        <button class="nav-btn" onclick="showApp('calc')">🧮 CALCULATOR</button>
-        <button class="nav-btn" onclick="showApp('snake')">🐍 SNAKE</button>
+    <!-- WELCOME SCREEN -->
+    <div id="welcomeScreen">
+        <h1>SUMIT PARMAR</h1>
     </div>
 
-    <div class="container">
-        <!-- TODO APP -->
-        <div id="todo" class="app active">
-            <h2 style="margin-bottom: 20px; color: #00ff88;">📝 My Tasks</h2>
-            <div class="todo-input">
-                <input type="text" id="todoInput" placeholder="Naya task likho..." onkeypress="if(event.key==='Enter') addTodo()">
-                <button onclick="addTodo()">ADD</button>
-            </div>
-            <ul class="todo-list" id="todoList"></ul>
+    <!-- MAIN CONTENT -->
+    <div id="mainContent">
+        <div class="navbar">
+            <button class="nav-btn active" onclick="showApp('todo')">📝 TODO</button>
+            <button class="nav-btn" onclick="showApp('calc')">🧮 CALCULATOR</button>
+            <button class="nav-btn" onclick="showApp('snake')">🐍 SNAKE</button>
+            <button class="nav-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
         </div>
 
-        <!-- CALCULATOR APP -->
-        <div id="calc" class="app">
-            <h2 style="margin-bottom: 20px; color: #00ff88;">🧮 Calculator</h2>
-            <div class="calc">
-                <div class="calc-display" id="calcDisplay">0</div>
-                <div class="calc-buttons">
-                    <button onclick="clearCalc()" class="operator">C</button>
-                    <button onclick="appendCalc('/')" class="operator">/</button>
-                    <button onclick="appendCalc('*')" class="operator">×</button>
-                    <button onclick="deleteCalc()" class="operator">⌫</button>
-                    <button onclick="appendCalc('7')">7</button>
-                    <button onclick="appendCalc('8')">8</button>
-                    <button onclick="appendCalc('9')">9</button>
-                    <button onclick="appendCalc('-')" class="operator">-</button>
-                    <button onclick="appendCalc('4')">4</button>
-                    <button onclick="appendCalc('5')">5</button>
-                    <button onclick="appendCalc('6')">6</button>
-                    <button onclick="appendCalc('+')" class="operator">+</button>
-                    <button onclick="appendCalc('1')">1</button>
-                    <button onclick="appendCalc('2')">2</button>
-                    <button onclick="appendCalc('3')">3</button>
-                    <button onclick="appendCalc('.')">.</button>
-                    <button onclick="appendCalc('0')" style="grid-column: span 2;">0</button>
-                    <button onclick="calculate()" class="equals">=</button>
+        <div class="container">
+            <!-- TODO APP -->
+            <div id="todo" class="app active">
+                <h2 style="margin-bottom: 20px; color: #00ff88;">📝 My Tasks</h2>
+                <div class="todo-input">
+                    <input type="text" id="todoInput" placeholder="Naya task likho..." onkeypress="if(event.key==='Enter') addTodo()">
+                    <button onclick="addTodo()">ADD</button>
+                </div>
+                <ul class="todo-list" id="todoList"></ul>
+            </div>
+
+            <!-- CALCULATOR APP -->
+            <div id="calc" class="app">
+                <h2 style="margin-bottom: 20px; color: #00ff88;">🧮 Calculator</h2>
+                <div class="calc">
+                    <div class="calc-display" id="calcDisplay">0</div>
+                    <div class="calc-buttons">
+                        <button onclick="clearCalc()" class="operator">C</button>
+                        <button onclick="appendCalc('/')" class="operator">/</button>
+                        <button onclick="appendCalc('*')" class="operator">×</button>
+                        <button onclick="deleteCalc()" class="operator">⌫</button>
+                        <button onclick="appendCalc('7')">7</button>
+                        <button onclick="appendCalc('8')">8</button>
+                        <button onclick="appendCalc('9')">9</button>
+                        <button onclick="appendCalc('-')" class="operator">-</button>
+                        <button onclick="appendCalc('4')">4</button>
+                        <button onclick="appendCalc('5')">5</button>
+                        <button onclick="appendCalc('6')">6</button>
+                        <button onclick="appendCalc('+')" class="operator">+</button>
+                        <button onclick="appendCalc('1')">1</button>
+                        <button onclick="appendCalc('2')">2</button>
+                        <button onclick="appendCalc('3')">3</button>
+                        <button onclick="appendCalc('.')">.</button>
+                        <button onclick="appendCalc('0')" style="grid-column: span 2;">0</button>
+                        <button onclick="calculate()" class="equals">=</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- SNAKE APP -->
-        <div id="snake" class="app">
-            <h2 style="margin-bottom: 20px; color: #00ff88;">🐍 Snake Game</h2>
-            <div class="snake-container">
-                <div class="snake-hud">
-                    <div>Score: <span id="snakeScore">0</span></div>
-                    <div>Best: <span id="snakeBest">0</span></div>
-                </div>
-                <canvas id="snakeCanvas" width="300" height="300"></canvas>
-                <div class="snake-controls">
-                    <button class="snake-btn" id="snakeStart" onclick="startSnake()">START GAME</button>
-                    <br>
-                    <div class="dpad">
-                        <div></div>
-                        <button onclick="changeDir(0,-1)">↑</button>
-                        <div></div>
-                        <button onclick="changeDir(-1,0)">←</button>
-                        <button onclick="changeDir(0,1)">↓</button>
-                        <button onclick="changeDir(1,0)">→</button>
+            <!-- SNAKE APP -->
+            <div id="snake" class="app">
+                <h2 style="margin-bottom: 20px; color: #00ff88;">🐍 Snake Game</h2>
+                <div class="snake-container">
+                    <div class="snake-hud">
+                        <div>Score: <span id="snakeScore">0</span></div>
+                        <div>Best: <span id="snakeBest">0</span></div>
+                    </div>
+                    <canvas id="snakeCanvas" width="300" height="300"></canvas>
+                    <div class="snake-controls">
+                        <button class="snake-btn" id="snakeStart" onclick="startSnake()">START GAME</button>
+                        <br>
+                        <div class="dpad">
+                            <div></div>
+                            <button onclick="changeDir(0,-1)">↑</button>
+                            <div></div>
+                            <button onclick="changeDir(-1,0)">←</button>
+                            <button onclick="changeDir(0,1)">↓</button>
+                            <button onclick="changeDir(1,0)">→</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -330,7 +418,7 @@
             updateDisplay();
         }
 
-        // SNAKE LOGIC - SIMPLE & WORKING
+        // SNAKE LOGIC
         const snakeCanvas = document.getElementById('snakeCanvas');
         const snakeCtx = snakeCanvas.getContext('2d');
         let snake, food, dx, dy, snakeScore, snakeGame, snakeRunning;
@@ -429,6 +517,21 @@
         });
 
         initSnake();
+
+        // THEME TOGGLE FUNCTION
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const btn = document.getElementById('themeBtn');
+            const isLight = document.body.classList.contains('light-mode');
+            btn.textContent = isLight? '☀️' : '🌙';
+            localStorage.setItem('theme', isLight? 'light' : 'dark');
+        }
+
+        // PAGE LOAD PE THEME CHECK KAR
+        if(localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+            document.getElementById('themeBtn').textContent = '☀️';
+        }
     </script>
 </body>
 </html>
